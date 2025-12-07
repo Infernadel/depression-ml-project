@@ -26,7 +26,7 @@ def create_and_save_model():
     Dalam praktik nyata, Anda akan melatih model dengan data sesungguhnya.
     """
     # Definisi fitur
-    numeric_features = ['age', 'work_study_hours', 'financial_stress', 
+    numeric_features = ['work_study_hours', 'financial_stress', 
                        'pressure_score', 'overall_satisfaction']
     categorical_features = ['gender', 'combined_profession', 'degree',
                           'sleep_duration', 'dietary_habits',
@@ -81,7 +81,7 @@ def load_model():
         return {
             'preprocessor': model_data.named_steps['preprocessor'],
             'model': model_data.named_steps['classifier'],
-            'numeric_features': ['age', 'work_study_hours', 'financial_stress', 
+            'numeric_features': ['work_study_hours', 'financial_stress', 
                                'pressure_score', 'overall_satisfaction'],
             'categorical_features': ['gender', 'combined_profession', 'degree',
                                    'sleep_duration', 'dietary_habits',
@@ -241,17 +241,6 @@ def main():
     with col1:
         st.subheader("👤 Informasi Demografis")
         
-        # Age
-        st.markdown("**Age**")
-        st.caption("Masukkan usia Anda dalam tahun. Rentang umum: 15-80 tahun.")
-        age = st.number_input(
-            "Age",
-            min_value=10,
-            max_value=100,
-            value=25,
-            step=1,
-            label_visibility="collapsed"
-        )
         
         # Gender
         st.markdown("**Gender**")
@@ -383,10 +372,7 @@ def main():
     
     # Proses prediksi
     if predict_button:
-        # Validasi input
-        if age < 10 or age > 100:
-            st.error("❌ Usia harus antara 10-100 tahun!")
-            return
+
         
         if work_study_hours < 0 or work_study_hours > 24:
             st.error("❌ Jam kerja/belajar harus antara 0-24 jam!")
@@ -394,7 +380,6 @@ def main():
         
         # Siapkan input dictionary
         input_data = {
-            'age': age,
             'gender': gender,
             'combined_profession': combined_profession,
             'degree': degree,

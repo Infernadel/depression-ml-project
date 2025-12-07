@@ -41,7 +41,7 @@ def standardize_column_names(df):
 df = standardize_column_names(df)
 
 # Hapus kolom tak relevan
-df = df.drop(columns=['name', 'cgpa', 'city'], errors='ignore')
+df = df.drop(columns=['age', 'name', 'cgpa', 'city'], errors='ignore')
 
 df.info()
 
@@ -99,7 +99,7 @@ print("===========================")
 initial_rows = df.shape[0]
 print(f"Jumlah data awal: {initial_rows}")
 
-numeric_features = ['age', 'work_study_hours', 'financial_stress', 'pressure_score', 'overall_satisfaction']
+numeric_features = ['work_study_hours', 'financial_stress', 'pressure_score', 'overall_satisfaction']
 
 for col in numeric_features:
     if col in df.columns:
@@ -256,7 +256,7 @@ print("="*60)
 model_data = {
     'preprocessor': preprocessor,  # dari script training
     'model': model_lr,              # dari script training
-    'numeric_features': ['age', 'work_study_hours', 'financial_stress', 
+    'numeric_features': ['work_study_hours', 'financial_stress', 
                          'pressure_score', 'overall_satisfaction'],
     'categorical_features': ['gender', 'combined_profession', 'degree',
                             'sleep_duration', 'dietary_habits',
@@ -278,7 +278,6 @@ print(f"   📊 Ukuran: {file_size:.2f} KB")
 # Test prediksi cepat
 print("\n⏳ Test prediksi...")
 test_data = pd.DataFrame([{
-    'age': 25,
     'gender': 'Male',
     'combined_profession': 'Student',
     'degree': 'B.Tech',
