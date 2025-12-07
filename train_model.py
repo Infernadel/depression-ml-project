@@ -70,23 +70,37 @@ for col in ['academic_pressure', 'work_pressure']:
 df['pressure_score'] = df['academic_pressure'] + df['work_pressure']
 df = df.drop(columns=['academic_pressure', 'work_pressure'])
 
-# --- 3.4 Gabung fitur Satisfaction ---
+# --- 3.4 Penggabungan fitur Satisfaction ---
 for col in ['study_satisfaction', 'job_satisfaction']:
-    if col in df.columns and df[col].dtype != object:
-        df[col] = df[col].fillna(df[col].median())
-    else:
-        df[col] = pd.to_numeric(df[col], errors='coerce').fillna(df[col].median())
+    if col in df.columns:
+        df[col] = pd.to_numeric(df[col], errors='coerce').fillna(0).astype(int)
 
-df['overall_satisfaction'] = (df['study_satisfaction'] + df['job_satisfaction']) / 2
+df['overall_satisfaction'] = df['study_satisfaction'] + df['job_satisfaction']
+
 df = df.drop(columns=['study_satisfaction', 'job_satisfaction'])
 
 df.info()
 
 # ===============================================================
-# 4. CEK MISSING VALUE
+# 4. CEK MISSING VALUE DAN DUPLIKAT
 # ===============================================================
+# --- 4.1 Cek Missing Value ---
 print("\nMissing Value per Kolom:")
 print(df.isnull().sum())
+
+# --- 4.2 Cek Duplikat ---
+
+#Cek Nilai unik
+print("\nCek nilai unik per Kolom")
+for col in df.columns:
+    print(f"\n=== {col} ===")
+    print(df[col].value_counts())
+
+#Ganti Typo dan Drop Duplikat
+df['combined_profession'] = df['combined_profession'].replace({
+    'Finanancial Analyst': 'Financial Analyst'
+})
+df = df.drop_duplicates()
 
 # ===============================================================
 # 5. DETEKSI & PENGHAPUSAN OUTLIER
