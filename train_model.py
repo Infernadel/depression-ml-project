@@ -143,7 +143,7 @@ numeric_transformer = Pipeline(steps=[
 
 categorical_transformer = Pipeline(steps=[
     ('imputer', SimpleImputer(strategy='most_frequent')),
-    ('onehot', OneHotEncoder(handle_unknown='ignore', sparse_output=False))
+    ('onehot', OneHotEncoder(handle_unknown='ignore', sparse_output=False, drop='first'))
 ])
 
 preprocessor = ColumnTransformer(
